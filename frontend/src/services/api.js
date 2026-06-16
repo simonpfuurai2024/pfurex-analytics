@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE = 'https://earnings-shall-fundamental-marie.trycloudflare.com';
+// Uses VITE_API_BASE_URL environment variable; falls back to localhost for development
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const api = axios.create({
   baseURL: API_BASE,
