@@ -1,0 +1,71 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: pfurex-db
+    environment:
+      POSTGRES_USER: pfurex
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: pfurex
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pfurex"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.3.5
+    container_name: pfurex-redpanda
+    command:
+      - redpanda
+      - start
+      - --smp=1
+      - --memory=512M
+      - --reserve-memory=0M
+      - --overprovisioned
+      - --kafka-addr=0.0.0.0:9092
+      - --advertise-kafka-addr=redpanda:9092
+    ports:
+      - "9092:9092"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pfurex-backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://pfurex:changeme@db:5432/pfurex
+      REDPANDA_BROKERS: redpanda:9092
+      JWT_SECRET_KEY: dev-secret-change-in-production
+      LLM_MODEL_PATH: /models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+      FILE_STORAGE_PATH: /app/uploads
+    volumes:
+      - ./models:/models
+      - uploads_data:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      redpanda:
+        condition: service_started
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://backend:8000
+    container_name: pfurex-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
+  uploads_data:

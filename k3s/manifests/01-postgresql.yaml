@@ -1,0 +1,100 @@
+# 01-postgres.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: zivc
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: zivc
+data:
+  init.sql: |
+    -- This script runs only the first time the database is created.
+    -- The actual DDL tables are created by Alembic/FastAPI on startup.
+    -- Here we just ensure the pfurex database exists.
+    CREATE DATABASE pfurex;
+    \c pfurex
+    CREATE EXTENSION IF NOT EXISTS uuid-ossp;
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+  namespace: zivc
+type: Opaque
+stringData:
+  POSTGRES_USER: pfurex
+  POSTGRES_PASSWORD: changeme   # Replace with strong password in production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: zivc
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: zivc
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            requests:
+              memory: 300Mi
+              cpu: 250m
+            limits:
+              memory: 800Mi
+              cpu: 1000m
+      volumes:
+        - name: init-script
+          configMap:
+            name: postgres-init
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 10Gi
