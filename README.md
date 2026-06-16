@@ -45,6 +45,32 @@ Pfurex Analytics automates the entire investment analysis pipeline for early-sta
 
 ## 📂 Project Structure
 
+pfurex-analytics/
+├── backend/
+│ ├── app/
+│ │ ├── api/ # FastAPI routers (companies, documents, dashboard, simulation, etc.)
+│ │ ├── engines/ # Valuation, risk scoring, and simulation engines
+│ │ ├── events/ # Redpanda producer/consumer
+│ │ ├── models/ # SQLAlchemy ORM models
+│ │ ├── parsers/ # Document text extraction
+│ │ └── auth/ # Authentication & RBAC
+│ ├── alembic/ # Database migrations
+│ ├── scripts/ # Seed data, admin setup
+│ ├── requirements.txt
+│ └── Dockerfile
+├── frontend/
+│ ├── src/
+│ │ ├── pages/ # React page components
+│ │ ├── components/ # Reusable components
+│ │ ├── context/ # Auth context
+│ │ └── services/ # API client (Axios)
+│ └── Dockerfile
+├── k3s/manifests/ # Kubernetes manifests (PostgreSQL, Redpanda)
+├── models/ # LLM model files (not tracked in Git)
+├── docker-compose.yml
+└── README.md
+text
+
 
 ---
 
@@ -61,10 +87,20 @@ Pfurex Analytics automates the entire investment analysis pipeline for early-sta
 ```bash
 git clone https://github.com/simonpfuurai2024/pfurex-analytics.git
 cd pfurex-analytics
+
+2. Download the LLM Model
+
+Place the Mistral 7B Q4 quantised GGUF file in models/:
+bash
+
 mkdir -p models
 cd models
 wget https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
 cd ..
+
+3. Start Infrastructure (PostgreSQL + Redpanda)
+bash
+
 # Start k3s
 sudo systemctl start k3s
 
@@ -78,6 +114,10 @@ kubectl wait --for=condition=Ready pods --all -n zivc --timeout=120s
 
 # Port‑forward PostgreSQL
 kubectl port-forward -n zivc svc/postgres 5432:5432 &
+
+4. Start the Backend
+bash
+
 cd backend
 python -m venv venv
 source venv/bin/activate
@@ -98,18 +138,59 @@ python scripts/seed_admin.py
 
 # Start the API
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+5. Start the Frontend
+bash
+
 cd frontend
 npm install
 npm run dev
+
+Open http://localhost:5173 in your browser.
+Default Login
+
+    Email: admin@pfurex.co.zw
+
+    Password: Admin123!
+
+🐳 Docker Compose
+bash
+
 docker compose up -d --build
+
+The frontend will be available at http://localhost, backend at http://localhost:8000.
+🌐 Demo via Cloudflare Tunnel
+
+Expose your local instance to the internet for demos:
+bash
+
 cloudflared tunnel --url http://localhost:8000
 
----
+Share the generated trycloudflare.com URL.
+🔑 Environment Variables
+Variable	Description	Default
+DATABASE_URL	PostgreSQL connection string	postgresql+asyncpg://...
+LLM_MODEL_PATH	Path to Mistral GGUF file	models/mistral-7b...
+JWT_SECRET_KEY	Secret for JWT signing	dev-secret-...
+DEEPSEEK_API_KEY	DeepSeek API key (optional)	—
+GEMINI_API_KEY	Gemini API key (optional)	—
+📄 License
 
-## Commit and Push
+MIT License — see LICENSE file.
+👤 Author
 
-```bash
-cd ~/pfurex-analytics
-git add README.md
-git commit -m "Add comprehensive README"
-git push origin main
+Simon Pfuurai — Computer Systems Engineering graduate passionate about helping businesses scale and reach their potential.
+
+    GitHub: @simonpfuurai2024
+
+    LinkedIn: Simon Pfuurai
+
+🙏 Acknowledgments
+
+    Mistral AI for the open‑weight model
+
+    llama‑cpp‑python for CPU‑optimised inference
+
+    The Zimbabwean startup ecosystem for inspiring this tool
+
+Built with ❤️ in Harare, Zimbabwe 🇿🇼
