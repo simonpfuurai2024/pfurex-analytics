@@ -30,6 +30,7 @@ import {
   Share2,
   Code2,
   BrainCircuit,
+  Phone,
 } from "lucide-react";
 
 // ---------- Animated Background Elements ----------
@@ -409,7 +410,7 @@ const Landing = () => {
             <p className="text-slate-600 dark:text-slate-400 text-center mb-16">The AI‑powered investment analysis platform in detail.</p>
           </FadeInView>
 
-          {/* How It Works (reuse from before) */}
+          {/* How It Works */}
           <div className="grid md:grid-cols-3 gap-10 mb-24">
             {[
               { step: "01", title: "Submit Application", desc: "Business owners fill a structured funding application, upload pitch decks, financials, or EcoCash statements.", icon: <FileText className="w-12 h-12 text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300" /> },
@@ -481,7 +482,6 @@ const Landing = () => {
                 <Users className="w-16 h-16 text-white" />
               </div>
               <h3 className="text-2xl font-bold">Simon Pfuurai</h3>
-              <p className="text-[#D4AF37] font-medium">Founder & CEO</p>
               <p className="mt-4 text-slate-600 dark:text-slate-400">
                 Computer Systems Engineering graduate with a passion for helping businesses scale through technology.
               </p>
@@ -498,6 +498,17 @@ const Landing = () => {
             <p className="text-lg text-slate-600 dark:text-slate-400 text-center mb-10">
               Ready to discuss a project? Send us a message and we'll get back to you.
             </p>
+            {/* Contact Details */}
+            <div className="flex flex-col md:flex-row justify-center gap-6 mb-10 text-center text-slate-600 dark:text-slate-400">
+              <div className="flex items-center justify-center gap-2">
+                <Phone className="w-5 h-5 text-[#D4AF37]" />
+                <span>+263 777 294 079</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Mail className="w-5 h-5 text-[#D4AF37]" />
+                <span>simonpfuuraiprojects@gmail.com</span>
+              </div>
+            </div>
           </FadeInView>
           {contactSent ? (
             <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="text-center bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl p-8">
