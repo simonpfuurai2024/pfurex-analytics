@@ -252,7 +252,7 @@ const Landing = () => {
             <ul className="space-y-3 text-slate-700 dark:text-slate-400">
               <li className="flex items-start space-x-3">
                 <Check className="text-[#00A896] w-6 h-6 mt-0.5 flex-shrink-0" />
-                <span>Multi‑currency confusion (ZiG, USD, ZWL, EcoCash)</span>
+                <span>Multi‑currency confusion (ZiG, USD, EcoCash)</span>
               </li>
               <li className="flex items-start space-x-3">
                 <Check className="text-[#00A896] w-6 h-6 mt-0.5 flex-shrink-0" />
