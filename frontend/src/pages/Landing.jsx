@@ -13,9 +13,23 @@ import {
   Users,
   Sparkles,
   Bot,
-  Download,
   Mail,
   ChevronDown,
+  Wrench,
+  Server,
+  Network,
+  Lock,
+  Cpu,
+  Globe,
+  Search,
+  MessageSquare,
+  DollarSign,
+  ClipboardCheck,
+  Megaphone,
+  Palette,
+  Share2,
+  Code2,
+  BrainCircuit,
 } from "lucide-react";
 
 // ---------- Animated Background Elements ----------
@@ -172,9 +186,26 @@ const Landing = () => {
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
-    setContactSent(true);
-    setContactForm({ name: "", email: "", message: "" });
-    setTimeout(() => setContactSent(false), 5000);
+    const formData = new FormData();
+    formData.append('access_key', 'YOUR_ACCESS_KEY_HERE'); // Replace with your Web3Forms key
+    formData.append('name', contactForm.name);
+    formData.append('email', contactForm.email);
+    formData.append('message', contactForm.message);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      if (res.ok) {
+        setContactSent(true);
+        setContactForm({ name: '', email: '', message: '' });
+        setTimeout(() => setContactSent(false), 5000);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch {
+      alert('Network error. Please try again.');
+    }
   };
 
   return (
@@ -184,13 +215,13 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <img src="/pfurex-analytics-log.png" alt="Pfurex Analytics" className="h-10 w-auto" />
-            <span className="text-xl font-bold text-[#0A1929] dark:text-white">Pfurex Analytics</span>
+            <span className="text-xl font-bold text-[#0A1929] dark:text-white">Pfurex Technologies</span>
           </div>
           <div className="hidden md:flex space-x-8 font-medium text-sm tracking-wide">
-            <a href="#how-it-works" className="hover:text-[#D4AF37] transition">How It Works</a>
-            <a href="#features" className="hover:text-[#D4AF37] transition">Features</a>
-            <a href="#faq" className="hover:text-[#D4AF37] transition">FAQ</a>
-            <a href="#team" className="hover:text-[#D4AF37] transition">Team</a>
+            <a href="#products" className="hover:text-[#D4AF37] transition">Products</a>
+            <a href="#services" className="hover:text-[#D4AF37] transition">Services</a>
+            <a href="#about" className="hover:text-[#D4AF37] transition">About</a>
+            <a href="#contact" className="hover:text-[#D4AF37] transition">Contact</a>
           </div>
         </div>
       </nav>
@@ -203,7 +234,7 @@ const Landing = () => {
         <motion.div style={{ y: heroY }} className="relative z-10 max-w-4xl mx-auto text-center px-6">
           <motion.img
             src="/pfurex-analytics-log.png"
-            alt="Pfurex Analytics"
+            alt="Pfurex Technologies"
             className="mx-auto w-20 md:w-28 mb-8 drop-shadow-2xl"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -215,7 +246,7 @@ const Landing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Intelligent Investment Analysis<br/>for Zimbabwean SMEs
+            Building Intelligent Software<br/>that Unlocks Zimbabwean Business Potential
           </motion.h1>
           <motion.p
             className="mt-6 text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto"
@@ -223,7 +254,7 @@ const Landing = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Pfurex Analytics combines AI‑powered extraction, sector‑specific valuation models, and Zimbabwe‑centric risk scoring to give investors and business owners transparent, data‑driven insights.
+            End‑to‑end systems from hardware infrastructure to AI‑powered platforms, designed with cybersecurity at the core.
           </motion.p>
           <motion.div
             className="mt-10 flex flex-wrap justify-center gap-4"
@@ -231,175 +262,241 @@ const Landing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <a href="#how-it-works" className="bg-[#D4AF37] text-[#0A1929] font-bold px-8 py-4 rounded-full text-lg hover:bg-[#c9a32b] transition shadow-2xl">
-              See How It Works
+            <a href="#products" className="bg-[#D4AF37] text-[#0A1929] font-bold px-8 py-4 rounded-full text-lg hover:bg-[#c9a32b] transition shadow-2xl">
+              Explore Products
             </a>
             <a href="#contact" className="border border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#D4AF37] hover:text-[#0A1929] transition">
-              Request Access
+              Get in Touch
             </a>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* ---------- PROBLEM & SOLUTION ---------- */}
-      <section id="problem" className="py-24 bg-white dark:bg-[#0A1929]">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <FadeInView direction="left">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">The Challenge</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Early‑stage Zimbabwean businesses struggle to attract investment because their financial data is fragmented, often recorded across multiple currencies and mobile money platforms. Investors lack reliable, comparable valuation benchmarks, leading to subjective, time‑consuming decision‑making.
+      {/* ---------- PRODUCTS ---------- */}
+      <section id="products" className="py-24 bg-white dark:bg-[#0A1929]">
+        <div className="max-w-7xl mx-auto px-6">
+          <FadeInView>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Our Flagship Products</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">
+              Powerful AI‑driven solutions designed for Zimbabwean businesses.
             </p>
-            <ul className="space-y-3 text-slate-700 dark:text-slate-400">
-              <li className="flex items-start space-x-3">
-                <Check className="text-[#00A896] w-6 h-6 mt-0.5 flex-shrink-0" />
-                <span>Multi‑currency confusion (ZiG, USD, ZWL, EcoCash)</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <Check className="text-[#00A896] w-6 h-6 mt-0.5 flex-shrink-0" />
-                <span>Absence of standardised valuation models</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <Check className="text-[#00A896] w-6 h-6 mt-0.5 flex-shrink-0" />
-                <span>High risk perception due to policy and currency volatility</span>
-              </li>
-            </ul>
           </FadeInView>
-          <FadeInView direction="right">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Solution</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              Pfurex Analytics automates the entire investment analysis pipeline. Business owners submit a funding application, upload supporting documents, and our AI instantly generates a complete valuation, risk assessment, and deal structure – backed by transparent, auditable reasoning.
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* Pfurex Analytics */}
+            <FadeInView>
+              <div className="bg-[#F8FAFC] dark:bg-[#0a1422] rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition">
+                <div className="flex items-center gap-4 mb-6">
+                  <BarChart3 className="w-10 h-10 text-[#D4AF37]" />
+                  <h3 className="text-2xl font-bold text-[#0A1929] dark:text-white">Pfurex Analytics</h3>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 mb-4">
+                  AI‑powered investment analysis platform. Automates financial data extraction, multi‑method valuation, and Zimbabwe‑specific risk scoring to bridge the gap between SMEs and investors.
+                </p>
+                <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400 mb-6">
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Multi‑currency normalisation</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Monte Carlo simulations</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Investor‑ready audit reports</li>
+                </ul>
+                <a href="#pfurex-analytics" className="text-[#D4AF37] font-semibold hover:underline">Learn more →</a>
+              </div>
+            </FadeInView>
+
+            {/* PfurexProcure */}
+            <FadeInView>
+              <div className="bg-[#F8FAFC] dark:bg-[#0a1422] rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition">
+                <div className="flex items-center gap-4 mb-6">
+                  <ClipboardCheck className="w-10 h-10 text-[#D4AF37]" />
+                  <h3 className="text-2xl font-bold text-[#0A1929] dark:text-white">PfurexProcure</h3>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 mb-4">
+                  AI procurement agentic system. End‑to‑end procurement automation: requisition analysis, vendor search, voice & text communication, fair‑price ML analytics, quotation analysis, and price negotiation.
+                </p>
+                <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400 mb-6">
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Vendor search & communication</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Fair price analytics</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#00A896]" /> Approval automation</li>
+                </ul>
+                <a href="#contact" className="text-[#D4AF37] font-semibold hover:underline">Request demo →</a>
+              </div>
+            </FadeInView>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- SERVICES ---------- */}
+      <section id="services" className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <FadeInView>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Services We Offer</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-16 max-w-2xl mx-auto">
+              We don't just deploy software — we build complete, secure systems from the ground up.
             </p>
-            <div className="flex space-x-4">
-              <span className="bg-[#D4AF37] text-[#0A1929] px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                <Bot className="w-4 h-4" /> AI‑Powered
-              </span>
-              <span className="bg-[#00A896] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4" /> Auditable
-              </span>
-              <span className="bg-[#0A1929] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                <Building2 className="w-4 h-4" /> Zimbabwe‑First
-              </span>
-            </div>
+          </FadeInView>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: <Code2 className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Custom Software Development", desc: "Tailored applications for your business processes, built with modern, scalable technologies." },
+              { icon: <BrainCircuit className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "AI Agent Development & Deployment", desc: "Intelligent agents that automate workflows, from procurement to customer service." },
+              { icon: <Palette className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Website & Logo Design", desc: "Beautiful, responsive websites and memorable brand identities that stand out." },
+              { icon: <Search className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "SEO", desc: "Data‑driven search engine optimisation to get your business found online." },
+              { icon: <Share2 className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Social Media Integration & Automation", desc: "Automated posting, scheduling, and engagement across all major platforms." },
+              { icon: <Megaphone className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Graphics Design", desc: "Professional graphics for print and digital — from brochures to social media kits." },
+            ].map((service, idx) => (
+              <FadeInView key={idx} delay={idx * 0.1}>
+                <div className="p-6 bg-white dark:bg-[#0A1929] rounded-2xl shadow-md hover:shadow-lg transition border border-slate-200 dark:border-slate-800">
+                  {service.icon}
+                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{service.desc}</p>
+                </div>
+              </FadeInView>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- HOW WE WORK (END-TO-END) ---------- */}
+      <section className="py-24 bg-white dark:bg-[#0A1929]">
+        <div className="max-w-7xl mx-auto px-6">
+          <FadeInView>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">End‑to‑End Systems, Secured</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-center mb-16 max-w-3xl mx-auto">
+              We handle everything from hardware installation and network infrastructure to software deployment — and we lock it all down with enterprise‑grade cybersecurity.
+            </p>
+          </FadeInView>
+          <div className="grid md:grid-cols-3 gap-10">
+            <FadeInView>
+              <div className="text-center p-6">
+                <Server className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-3">Hardware & Infrastructure</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Procurement, setup, and maintenance of servers, networking equipment, and on‑premise systems.</p>
+              </div>
+            </FadeInView>
+            <FadeInView>
+              <div className="text-center p-6">
+                <Network className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-3">Network Architecture</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Secure, redundant networks designed for performance and compliance with local data regulations.</p>
+              </div>
+            </FadeInView>
+            <FadeInView>
+              <div className="text-center p-6">
+                <Lock className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-3">Cybersecurity First</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">AES‑256 encryption, RBAC, immutable audit logs, and regular penetration testing baked into every deployment.</p>
+              </div>
+            </FadeInView>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- DATA SOVEREIGNTY / LOCAL LLM ---------- */}
+      <section className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <FadeInView>
+            <Cpu className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Localised AI for Data Sovereignty</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg">
+              We develop custom, localised Large Language Models (LLMs) that run entirely within your infrastructure — no foreign APIs, no data leaks. Your sensitive information stays in Zimbabwe, under your control.
+            </p>
           </FadeInView>
         </div>
       </section>
 
-      {/* ---------- HOW IT WORKS ---------- */}
-      <section id="how-it-works" className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      {/* ---------- PFUREX ANALYTICS DETAIL (HOW IT WORKS, FEATURES, FAQ) ---------- */}
+      <section id="pfurex-analytics" className="py-24 bg-white dark:bg-[#0A1929]">
+        <div className="max-w-7xl mx-auto px-6">
           <FadeInView>
-            <h2 className="text-3xl md:text-4xl font-bold mb-16">How It Works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Inside Pfurex Analytics</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-center mb-16">The AI‑powered investment analysis platform in detail.</p>
           </FadeInView>
-          <div className="grid md:grid-cols-3 gap-10">
+
+          {/* How It Works (reuse from before) */}
+          <div className="grid md:grid-cols-3 gap-10 mb-24">
             {[
               { step: "01", title: "Submit Application", desc: "Business owners fill a structured funding application, upload pitch decks, financials, or EcoCash statements.", icon: <FileText className="w-12 h-12 text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300" /> },
               { step: "02", title: "AI Analysis", desc: "Our LLM extracts key data, rates growth factors, and runs Zimbabwe‑specific valuation & risk models.", icon: <Bot className="w-12 h-12 text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300" /> },
               { step: "03", title: "Invest with Confidence", desc: "Investors receive a comprehensive, auditable report with transparent scores and editable ratings.", icon: <TrendingUp className="w-12 h-12 text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300" /> },
             ].map((item, idx) => (
               <FadeInView key={idx} delay={idx * 0.2}>
-                <div className="relative p-8 bg-white dark:bg-[#0A1929] rounded-2xl shadow-xl hover:shadow-2xl transition group">
+                <div className="relative p-8 bg-[#F8FAFC] dark:bg-[#0A1929] rounded-2xl shadow-xl hover:shadow-2xl transition group">
                   <div className="flex justify-center">{item.icon}</div>
-                  <div className="text-5xl font-bold text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300 text-center">
-                    {item.step}
-                  </div>
+                  <div className="text-5xl font-bold text-[#D4AF37] mb-4 group-hover:scale-110 transition-transform duration-300 text-center">{item.step}</div>
                   <h3 className="text-xl font-semibold mb-3 text-center">{item.title}</h3>
                   <p className="text-slate-600 dark:text-slate-400 text-center">{item.desc}</p>
-                  <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#00A896] rounded-bl-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
               </FadeInView>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* ---------- STATS COUNTERS ---------- */}
-      <section className="py-20 bg-white dark:bg-[#0A1929]">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeInView>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Trusted by Early Adopters</h2>
-          </FadeInView>
-          <div className="grid md:grid-cols-3 gap-12">
-            <Counter end={2} label="Early Investors" suffix="+" />
-            <Counter end={5} label="SMEs" suffix="+" />
-            <Counter end={200} label="Documents Processed" suffix="+" />
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- FEATURES ---------- */}
-      <section id="features" className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <FadeInView>
-            <h2 className="text-3xl md:text-4xl font-bold mb-16">Key Features</h2>
-          </FadeInView>
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* Features */}
+          <h3 className="text-2xl font-bold text-center mb-12">Key Features</h3>
+          <div className="grid md:grid-cols-3 gap-8 mb-24">
             {[
-              { icon: <BarChart3 className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Multi‑Method Valuation", text: "Scorecard, Venture Capital, and Risk‑Adjusted models calibrated for Zimbabwean sectors." },
-              { icon: <ShieldCheck className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Zimbabwe Risk Scoring", text: "Five‑factor risk model covering policy, currency, management, infrastructure, and competition." },
-              { icon: <ArrowLeftRight className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Multi‑Currency", text: "Seamless handling of USD, ZiG, ZWL, and mobile money statements – all normalised." },
-              { icon: <FileText className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Document Intelligence", text: "AI reads pitch decks, Excel financials, and PDF statements, extracting key metrics automatically." },
-              { icon: <Pencil className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Editable Ratings", text: "Investors can override AI ratings with justifications, and recalculate valuations instantly." },
-              { icon: <TrendingUp className="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" />, title: "Audit Trail", text: "Every valuation, edit, and document processed is logged for full transparency." },
+              { icon: <BarChart3 className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Multi‑Method Valuation", text: "Scorecard, Venture Capital, and Risk‑Adjusted models calibrated for Zimbabwean sectors." },
+              { icon: <ShieldCheck className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Zimbabwe Risk Scoring", text: "Five‑factor risk model covering policy, currency, management, infrastructure, and competition." },
+              { icon: <ArrowLeftRight className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Multi‑Currency", text: "Seamless handling of USD, ZiG, ZWL, and mobile money statements." },
+              { icon: <FileText className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Document Intelligence", text: "AI reads pitch decks, Excel financials, and PDF statements automatically." },
+              { icon: <Pencil className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Editable Ratings", text: "Investors override AI ratings with justifications and recalculate." },
+              { icon: <TrendingUp className="w-10 h-10 text-[#D4AF37] mx-auto mb-4" />, title: "Audit Trail", text: "Every valuation, edit, and document is logged for full transparency." },
             ].map((feature, idx) => (
               <FadeInView key={idx} delay={idx * 0.1}>
-                <div className="p-8 bg-white dark:bg-[#0A1929] rounded-2xl shadow-lg hover:shadow-xl transition border border-slate-200 dark:border-slate-800">
+                <div className="p-6 bg-[#F8FAFC] dark:bg-[#0A1929] rounded-2xl shadow-lg hover:shadow-xl transition border border-slate-200 dark:border-slate-800 text-center">
                   {feature.icon}
-                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400">{feature.text}</p>
+                  <h4 className="text-lg font-semibold mb-2">{feature.title}</h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{feature.text}</p>
                 </div>
               </FadeInView>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* ---------- FAQ ---------- */}
-      <section id="faq" className="py-24 bg-white dark:bg-[#0A1929]">
-        <div className="max-w-3xl mx-auto px-6">
-          <FadeInView>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Frequently Asked Questions</h2>
-          </FadeInView>
-          <div>
-            <FAQItem question="How accurate is the AI valuation?" answer="Our AI uses established valuation methods (Scorecard, Venture Capital, Risk‑Adjusted) calibrated with Zimbabwe‑specific benchmarks. Results are transparent and editable, allowing investors to apply their own judgment." />
-            <FAQItem question="Is my financial data secure?" answer="Absolutely. Pfurex Analytics is designed for on‑premise deployment, meaning your data never leaves your institution's infrastructure. All documents are encrypted at rest and in transit." />
-            <FAQItem question="Can I use Pfurex without an internet connection?" answer="Yes – once deployed on your local server, the entire platform works offline. Internet is only needed for initial setup and periodic updates." />
-            <FAQItem question="What documents can I upload?" answer="You can upload pitch decks (PDF), financial models (Excel), EcoCash statements, bank statements, and tax returns. Our AI automatically extracts relevant data from each." />
-            <FAQItem question="Who can edit the AI ratings?" answer="Only registered investors and admins can override the AI's scores. Every change is logged and auditable, and the original AI ratings are always preserved for comparison." />
+          {/* FAQ */}
+          <h3 className="text-2xl font-bold text-center mb-12">Frequently Asked Questions</h3>
+          <div className="max-w-3xl mx-auto">
+            <FAQItem question="How accurate is the AI valuation?" answer="Our AI uses established valuation methods calibrated with Zimbabwe‑specific benchmarks. Results are transparent and editable, allowing investors to apply their own judgment." />
+            <FAQItem question="Is my financial data secure?" answer="Absolutely. Pfurex Analytics is designed for on‑premise deployment — your data never leaves your institution's infrastructure. All documents are encrypted at rest and in transit." />
+            <FAQItem question="Can I use Pfurex without an internet connection?" answer="Yes — once deployed on your local server, the entire platform works offline. Internet is only needed for initial setup and updates." />
+            <FAQItem question="What documents can I upload?" answer="Pitch decks (PDF), financial models (Excel), EcoCash statements, bank statements, and tax returns. Our AI automatically extracts relevant data from each." />
+            <FAQItem question="Who can edit the AI ratings?" answer="Only registered investors and admins can override the AI's scores. Every change is logged and auditable." />
           </div>
         </div>
       </section>
 
-      {/* ---------- TEAM ---------- */}
-      <section id="team" className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      {/* ---------- ABOUT / MISSION ---------- */}
+      <section id="about" className="py-24 bg-[#F8FAFC] dark:bg-[#0a1422]">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
           <FadeInView>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Meet the Founder</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-16 max-w-2xl mx-auto">
-              Built by a Zimbabwean engineer who understands the challenges facing local businesses.
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">About Pfurex Technologies</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-4">
+              We are a Zimbabwean software systems development startup dedicated to building intelligent solutions that unlock business potential.
+            </p>
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-4">
+              Our mission: <strong>“Building intelligent software that unlocks Zimbabwean business potential.”</strong>
+            </p>
+            <p className="text-slate-600 dark:text-slate-400">
+              From hardware infrastructure to AI‑powered platforms, we deliver complete, secure systems — not just code. Cybersecurity and data sovereignty are at the heart of everything we build.
             </p>
           </FadeInView>
           <FadeInView>
-            <div className="max-w-md mx-auto bg-white dark:bg-[#0A1929] p-8 rounded-2xl shadow-2xl border border-[#D4AF37]/20">
+            <div className="bg-white dark:bg-[#0A1929] p-8 rounded-2xl shadow-2xl border border-[#D4AF37]/20 text-center">
               <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-[#D4AF37] to-[#00A896] p-1 mb-6 flex items-center justify-center">
                 <Users className="w-16 h-16 text-white" />
               </div>
               <h3 className="text-2xl font-bold">Simon Pfuurai</h3>
               <p className="text-[#D4AF37] font-medium">Founder & CEO</p>
-              <p className="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed">
-                Computer Systems Engineering graduate with a passion for helping businesses scale and reach their potential. Simon combines deep technical expertise with a commitment to unlocking capital for Zimbabwean entrepreneurs.
+              <p className="mt-4 text-slate-600 dark:text-slate-400">
+                Computer Systems Engineering graduate with a passion for helping businesses scale through technology.
               </p>
             </div>
           </FadeInView>
         </div>
       </section>
 
-      {/* ---------- CONTACT / REQUEST DEMO ---------- */}
+      {/* ---------- CONTACT ---------- */}
       <section id="contact" className="py-24 bg-white dark:bg-[#0A1929]">
         <div className="max-w-2xl mx-auto px-6">
           <FadeInView>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Get in Touch</h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 text-center mb-10">
-              Interested in a demo or have questions? Send us a message.
+              Ready to discuss a project? Send us a message and we'll get back to you.
             </p>
           </FadeInView>
           {contactSent ? (
@@ -410,21 +507,9 @@ const Landing = () => {
             </motion.div>
           ) : (
             <form onSubmit={handleContactSubmit} className="space-y-5">
-              <input
-                type="text" placeholder="Your Name" value={contactForm.name}
-                onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} required
-                className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition"
-              />
-              <input
-                type="email" placeholder="Your Email" value={contactForm.email}
-                onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} required
-                className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition"
-              />
-              <textarea
-                placeholder="Your Message" rows={4} value={contactForm.message}
-                onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })} required
-                className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition resize-none"
-              />
+              <input type="text" placeholder="Your Name" value={contactForm.name} onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} required className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition" />
+              <input type="email" placeholder="Your Email" value={contactForm.email} onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} required className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition" />
+              <textarea placeholder="Your Message" rows={4} value={contactForm.message} onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })} required className="w-full px-4 py-3 rounded-xl bg-[#F8FAFC] dark:bg-[#0a1422] border border-slate-200 dark:border-slate-700 text-[#0A1929] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] transition resize-none" />
               <button type="submit" className="w-full py-3 bg-[#D4AF37] text-[#0A1929] font-bold rounded-xl hover:bg-[#c9a32b] transition shadow-lg flex items-center justify-center gap-2">
                 <Mail className="w-5 h-5" /> Send Message
               </button>
@@ -433,28 +518,15 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* ---------- CTA ---------- */}
-      <section className="py-24 bg-gradient-to-r from-[#0A1929] via-[#0a1422] to-[#0A1929] text-white text-center">
-        <FadeInView>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to Transform SME Investment?</h2>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-10">
-            Join Pfurex Analytics and experience the future of data‑driven, transparent investment analysis.
-          </p>
-          <a href="#contact" className="inline-block bg-[#D4AF37] text-[#0A1929] font-bold px-10 py-5 rounded-full text-xl hover:bg-[#c9a32b] transition shadow-2xl">
-            Request Access
-          </a>
-        </FadeInView>
-      </section>
-
       {/* ---------- FOOTER ---------- */}
       <footer className="bg-[#0A1929] text-slate-400 py-10 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-between items-center">
           <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <img src="/pfurex-analytics-log.png" alt="Pfurex Analytics" className="h-8 w-auto" />
-            <span className="text-white font-semibold">Pfurex Analytics</span>
+            <img src="/pfurex-analytics-log.png" alt="Pfurex Technologies" className="h-8 w-auto" />
+            <span className="text-white font-semibold">Pfurex Technologies</span>
           </div>
           <div className="text-sm">
-            © {new Date().getFullYear()} Pfurex Analytics. All rights reserved.
+            © {new Date().getFullYear()} Pfurex Technologies. All rights reserved.
           </div>
         </div>
       </footer>
