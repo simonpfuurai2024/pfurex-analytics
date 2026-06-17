@@ -318,10 +318,9 @@ const Landing = () => {
           <FadeInView>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Trusted by Early Adopters</h2>
           </FadeInView>
-          <div className="grid md:grid-cols-3 gap-12">
-            <Counter end={15} label="Active Investors" />
-            <Counter end={8} label="Companies Analysed" />
-            <Counter end={200} label="Documents Processed" suffix="+" />
+          <div className="grid md:grid-cols-2 gap-12">
+            <Counter end={2} label="Early Investors" suffix="+" />
+            <Counter end={5} label="SMEs" suffix="+" />
           </div>
         </div>
       </section>
