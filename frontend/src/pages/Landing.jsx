@@ -188,7 +188,7 @@ const Landing = () => {
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('access_key', 'YOUR_ACCESS_KEY_HERE'); // Replace with your Web3Forms key
+    formData.append('access_key', '112c09ec-d037-4ca5-a22b-0c67a31cf140'); // Replace with your Web3Forms key
     formData.append('name', contactForm.name);
     formData.append('email', contactForm.email);
     formData.append('message', contactForm.message);
