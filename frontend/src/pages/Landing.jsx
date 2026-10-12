@@ -223,7 +223,7 @@ const Landing = () => {
             <a href="#why-us" className="hover:text-[#D4AF37] transition">Why Pfurex</a>
             <a href="#about" className="hover:text-[#D4AF37] transition">About</a>
             <a href= "login" className="hover:text-[#D4AF37] transition">Login</a>
-            <a href="#contact" className="hover:text-[#D4AF37] transition">Contact</a>
+            <a href="#contact" className="hover:text-[#D4AF37] transition">Contract</a>
           </div>
         </div>
       </nav>
